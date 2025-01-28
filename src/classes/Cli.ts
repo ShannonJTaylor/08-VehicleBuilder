@@ -172,11 +172,24 @@ class Cli {
           name: 'towingCapacity',
           message: 'Enter Towing Capacity',
         },
+        {
+          type: 'input',
+          name: 'wheelDiameter',
+          message: 'Enter Wheel Diameter',
+        },
+        {
+          type: 'input',
+          name: 'tireBrand',
+          message: 'Enter Tire Brand',
+        },
       ])
       .then((answers) => {
         // TODO: Use the answers object to pass the required properties to the Truck constructor
-        const truck = new Truck (
-          
+        const wheels = Array(4)
+        .fill(null)
+        .map(() => new Wheel(parseInt(answers.wheelDiameter), answers.tireBrand
+        
+        const truck = new Truck (          
           Cli.generateVin(),
           answers.color,
           answers.make,
@@ -184,8 +197,8 @@ class Cli {
           parseInt(answers.year),
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
+          wheels,
           parseInt(answers.towingCapacity),
-          []
         );
         // TODO: push the truck to the vehicles array
         this.vehicles.push(truck);
@@ -253,6 +266,12 @@ class Cli {
       ])
       .then((answers) => {
         // TODO: Use the answers object to pass the required properties to the Motorbike constructor
+        const wheels = [
+          new Wheel(parseInt(answers.frontWheelDiameter), answers.frontWheelBrand),
+          new Wheel(parseInt(answers.rearWheelDiameter), answers.rearWheelBrand)
+        ];
+
+
         const motorbike = new Motorbike(
           Cli.generateVin(),
           answers.color,
@@ -261,8 +280,7 @@ class Cli {
           parseInt(answers.year),
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
-          new Wheel(parseInt(answers.frontWheelDiameter), answers.frontWheelBrand),
-          new Wheel(parseInt(answers.rearWheelDiameter), answers.rearWheelBrand)
+          wheels //Pass the wheels array here
         );
         // TODO: push the motorbike to the vehicles array
         this.vehicles.push(motorbike);
@@ -409,9 +427,9 @@ class Cli {
         } else if (answers.action === 'Wheelie') {
           // Find the selected vehicle and make sure it's a motorbike
           for (let i = 0; i < this.vehicles.length; i++) {
-            of (this.vehicles[i].vin === this.selectedVehicleVin && this.vehicles[i].type === 'Motorbike') {
+            if (this.vehicles[i].vin === this.selectedVehicleVin && this.vehicles[i] instanceof Motorbike) {
               // If it is, perform a wheelie
-              this.vehicles[i].performWheelie();
+              (this.vehicles[i] as Motorbike).wheelie();
               console.log('Wheelie performed successfully!');
               return;
             } 
