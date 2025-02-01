@@ -76,7 +76,7 @@ Create a Vehicle: Choose the type of vehicle (Car, Motorbike, or Truck) and inpu
 Modify Vehicle: After creating a vehicle, you can update the wheel details or other vehicle attributes.  
 Control the Vehicle: Start, accelerate, decelerate, stop, reverse, and turn the vehicle.  
 Tow Vehicles: Trucks can tow other vehicles (Cars or Motorbikes) if their weight is within the truck's towing capacity.  
-Exit: Type exit at any point to quit the application.
+Exit: Scroll to exit at any point to quit the application.
 
 ## Example Usage
 

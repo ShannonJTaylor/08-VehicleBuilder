@@ -47,6 +47,7 @@ class Motorbike extends Vehicle {
       } else {
         this.wheels = wheels;
       }
+    
     }
 
 
