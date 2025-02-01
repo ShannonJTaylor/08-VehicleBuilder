@@ -27,9 +27,16 @@ class Cli {
     );
   }
 
-  // method to choose a vehicle from existing vehicles
+  
   chooseVehicle(): void {
-    inquirer
+    if (this.vehicles.length === 0) {
+      console.log('No vehicles available. Please create a vehicle first.');
+      this.startCli();
+      return;
+    }
+// method to choose a vehicle from existing vehicles
+
+      inquirer
       .prompt([
         {
           type: 'list',
@@ -41,7 +48,7 @@ class Cli {
               value: vehicle.vin,
             };
           }),
-        },
+        }
       ])
       .then((answers) => {
         // set the selectedVehicleVin to the vin of the selected vehicle
@@ -49,6 +56,12 @@ class Cli {
         // perform actions on the selected vehicle
         this.performActions();
       });
+  }
+   
+  validateNumericInput(input: string): boolean | string {
+    return isNaN(Number(input)) || Number(input) <= 0
+    ? "Please enter a valid number greater than 0"
+    : true;
   }
 
   // method to create a vehicle
@@ -100,16 +113,19 @@ class Cli {
           type: 'input',
           name: 'year',
           message: 'Enter Year',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'weight',
           message: 'Enter Weight',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'topSpeed',
           message: 'Enter Top Speed',
+          validate: this.validateNumericInput,
         },
       ])
       .then((answers) => {
@@ -156,26 +172,31 @@ class Cli {
           type: 'input',
           name: 'year',
           message: 'Enter Year',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'weight',
           message: 'Enter Weight',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'topSpeed',
           message: 'Enter Top Speed',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'towingCapacity',
           message: 'Enter Towing Capacity',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'wheelDiameter',
           message: 'Enter Wheel Diameter',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
@@ -185,9 +206,9 @@ class Cli {
       ])
       .then((answers) => {
         // TODO: Use the answers object to pass the required properties to the Truck constructor
-        const wheels = Array(4)
-        .fill(null)
-        .map(() => new Wheel(parseInt(answers.wheelDiameter), answers.tireBrand
+        const wheels = Array(4).fill(
+         new Wheel(parseInt(answers.wheelDiameter), answers.tireBrand)
+        );
         
         const truck = new Truck (          
           Cli.generateVin(),
@@ -232,21 +253,25 @@ class Cli {
           type: 'input',
           name: 'year',
           message: 'Enter Year',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'weight',
           message: 'Enter Weight',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'topSpeed',
           message: 'Enter Top Speed',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
           name: 'frontWheelDiameter',
           message: 'Enter Front Wheel Diameter',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
@@ -257,6 +282,7 @@ class Cli {
           type: 'input',
           name: 'rearWheelDiameter',
           message: 'Enter Rear Wheel Diameter',
+          validate: this.validateNumericInput,
         },
         {
           type: 'input',
@@ -293,31 +319,40 @@ class Cli {
 
   // method to find a vehicle to tow
   // TODO: add a parameter to accept a truck object
-  findVehicleToTow(): void {
+  findVehicleToTow(truck: Truck): void {
+    if (this.vehicles.length === 1) {
+    console.log("No other vehicles available to tow.");
+    this.performActions();
+    return;
+    }
+    
     inquirer
       .prompt([
         {
           type: 'list',
           name: 'vehicleToTow',
           message: 'Select a vehicle to tow',
-          choices: this.vehicles.map((vehicle) => {
-            return {
+          choices: this.vehicles
+            .filter((vehicle) => vehicle !== truck)
+            .map((vehicle) => ({
               name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
-              value: vehicle,
-            };
-          }),
+              value: vehicle.vin,
+            })),
         },
       ])
       .then((answers) => {
         // TODO: check if the selected vehicle is the truck
-        const vehicleToTow = answers.vehicleToTow;
-        if (vehicleToTow instanceof Truck) {
-        // TODO: if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
-          console.log('A truck cannot tow itself!');          
+        const vehicleToTow = this.vehicles.find(
+          (vehicle) => vehicle.vin === answers.vehicleToTow 
+        );
+
+        if (!vehicleToTow) {
+          console.log('Invalid selection. Try again.');
         } else {
-          // TODO: if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
-          console.log('Towing vehicle', vehicleToTow.make, vehicleToTow.model);
-        }        
+          console.log(
+            'Towing vehicle: ${vehicleToTow.make} ${vehicleToTow.model}.');
+        }
+        this.performActions();          
       });
   }
 
@@ -408,16 +443,11 @@ class Cli {
         } else if (answers.action === 'Tow') {
           // Find the selected vehicle and make sure it's a truck
           for (let i = 0; i < this.vehicles.length; i++) {
-            if (this.vehicles[i].vin === this.selectedVehicleVin && this.vehicles[i].type === 'Truck') {
+            if (this.vehicles[i].vin === this.selectedVehicleVin && this.vehicles[i] instanceof Truck) {
               const selectedTruck = this.vehicles[i];
               // Call the findVehicleToTow method
-              this.findVehicleToTow(selectedTruck)
-              .then(() => {
-                console.log('Towing action completed.');
-            })
-            .catch((error) => {
-              console.error('Error performing tow:', error);
-            });
+              this.findVehicleToTow(selectedTruck as Truck);
+              console.log('Towing action completed.');
             return; //Return to avoid instantly calling performActions again
             }
           }
