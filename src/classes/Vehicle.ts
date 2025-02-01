@@ -47,6 +47,22 @@ class Vehicle implements Driveable {
     }
   }
 
+  // Method to turn the vehicle
+  turn(direction: string): void {
+    // Check if the vehicle is started
+    if (this.started) {
+      console.log(`Vehicle turned ${direction}`);
+      // Additional logging for right/left turns
+      if (direction === 'right') {
+        console.log('Vehicle turned right');
+      } else if (direction === 'left') {
+        console.log('Vehicle turned left');
+      }
+    } else {
+      console.log('Start the vehicle first');
+    }
+  }
+
   // Method to stop the vehicle
   stop(): void {
     this.currentSpeed = 0;
@@ -54,17 +70,7 @@ class Vehicle implements Driveable {
     console.log('Vehicle stopped');
   }
 
-  // Method to turn the vehicle
-  turn(direction: string): void {
-    // Check if the vehicle is started
-    if (this.started) {
-      console.log(`Vehicle turned ${direction}`);
-    } else {
-      console.log('Start the vehicle first');
-    }
-  }
-
-  // Method to reverse the vehicle
+    // Method to reverse the vehicle
   reverse(): void {
     // Check if the vehicle is started
     if (this.started) {

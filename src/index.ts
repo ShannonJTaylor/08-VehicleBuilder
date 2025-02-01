@@ -54,6 +54,7 @@ const motorbike1 = new Motorbike(
 vehicles.push(motorbike1);
 
 
+
 // create a new instance of the Cli class
 const cli = new Cli(vehicles);
 
