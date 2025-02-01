@@ -72,37 +72,34 @@ This will launch the app in the terminal and prompt you to start createing vehic
 
 You can interact with the app using the following options:
 
-Create a Vehicle: Choose the type of vehicle (Car, Motorbike, or Truck) and input the required attributes like VIN, color, make, model, etc.
-Modify Vehicle: After creating a vehicle, you can update the wheel details or other vehicle attributes.
-Control the Vehicle: Start, accelerate, decelerate, stop, reverse, and turn the vehicle.
-Tow Vehicles: Trucks can tow other vehicles (Cars or Motorbikes) if their weight is within the truck's towing capacity.
+Create a Vehicle: Choose the type of vehicle (Car, Motorbike, or Truck) and input the required attributes like VIN, color, make, model, etc.  
+Modify Vehicle: After creating a vehicle, you can update the wheel details or other vehicle attributes.  
+Control the Vehicle: Start, accelerate, decelerate, stop, reverse, and turn the vehicle.  
+Tow Vehicles: Trucks can tow other vehicles (Cars or Motorbikes) if their weight is within the truck's towing capacity.  
 Exit: Type exit at any point to quit the application.
 
 ## Example Usage
 
-Choose an option:
-1. Create a Car
-2. Create a Motorbike
-3. Create a Truck
+Choose an option:  
+1. Create a Car  
+2. Create a Motorbike  
+3. Create a Truck  
 4. Exit
 
-> 1
 
-Enter the VIN: 1HGCM82633A123456
-Enter the color: Red
-Enter the make: Honda
-Enter the model: Civic
-Enter the year: 2023
-Enter the weight: 3000
-Enter the top speed: 120
-Enter the number of wheels (default 4): 4
-
+Enter the VIN: 1HGCM82633A123456  
+Enter the color: Red  
+Enter the make: Honda  
+Enter the model: Civic  
+Enter the year: 2023  
+Enter the weight: 3000  
+Enter the top speed: 120  
+Enter the number of wheels default 4): 4  
 Vehicle created! Would you like to:
 1. Modify vehicle
 2. Control vehicle
 3. Exit
 
-> 2
 
 Choose an action:
 1. Start vehicle
@@ -113,21 +110,21 @@ Choose an action:
 6. Turn right
 7. Exit
 
-> 1
 
 Vehicle started.
 
 ## Contributing
 
-f you'd like to contribute to this project, feel free to fork the repository, create a new branch, and submit a pull request. Please ensure your code is well-tested and follows the project's coding standards.
+If you'd like to contribute to this project please ensure your code is well-tested and follows the project's coding standards.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a pull request
+.
 
-Fork the repository.
-Create a new branch (git checkout -b feature-branch).
-Commit your changes (git commit -am 'Add new feature').
-Push to the branch (git push origin feature-branch).
-Submit a pull request.
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 The app is built using TypeScript, which helps in creating a more maintainable and scalable project.
