@@ -456,16 +456,21 @@ class Cli {
         // TODO: add statements to perform the wheelie action only if the selected vehicle is a motorbike
         } else if (answers.action === 'Wheelie') {
           // Find the selected vehicle and make sure it's a motorbike
+          let motorbikeFound = false;
+
           for (let i = 0; i < this.vehicles.length; i++) {
             if (this.vehicles[i].vin === this.selectedVehicleVin && this.vehicles[i] instanceof Motorbike) {
               // If it is, perform a wheelie
               (this.vehicles[i] as Motorbike).wheelie();
-              console.log('Wheelie performed successfully!');
-              
+              motorbikeFound = true;
+               break;             
             } 
           }
-          console.log('The selected vehicle is not a motorbike. Cannot perform a wheelie.');
-         } else if (answers.action === 'Select or create another vehicle') {
+          if (!motorbikeFound) {
+            console.log('The selected vehicle is not a motorbike. Cannot perform a wheelie.');
+            this.performActions();
+          }
+        } else if (answers.action === 'Select or create another vehicle') {
           // start the cli to return to the initial prompt if the user wants to select or create another vehicle
           this.startCli();
           return;
