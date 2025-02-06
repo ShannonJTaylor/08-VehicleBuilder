@@ -12,9 +12,6 @@ class Truck extends Vehicle implements AbleToTow {
   // TODO: The types should be as follows: vin (string), color (string), make (string), model (string), year (number), weight (number), topSpeed (number), wheels (Wheel[]), towingCapacity (number)
   vin: string;
   color: string;
-  make: string;
-  model: string;
-  year: number;
   weight: number;
   topSpeed: number;
   wheels: Wheel[];
@@ -35,7 +32,7 @@ class Truck extends Vehicle implements AbleToTow {
     towingCapacity: number
   ) {
     // Call the constructor of the parent class, Vehicle
-    super();
+    super(make, model, year);
 
     // Initialize properties of the Truck class
     this.vin = vin;

@@ -8,10 +8,7 @@ class Motorbike extends Vehicle {
   // TODO: The properties should include vin, color, make, model, year, weight, top speed, and wheels
   // TODO: The types should be as follows: vin (string), color (string), make (string), model (string), year (number), weight (number), topSpeed (number), wheels (Wheel[])
   vin: string;
-  color: string;
-  make: string;
-  model: string;
-  year: number;
+  color: string; 
   weight: number;
   topSpeed: number;
   wheels: Wheel[];  
@@ -30,7 +27,7 @@ class Motorbike extends Vehicle {
       wheels: Wheel[]
     ) {
       // Call the constructor of the parent class, Vehicle
-      super();
+      super(make, model, year);
   
       // Initialize properties of the Motorbike class
       this.vin = vin;

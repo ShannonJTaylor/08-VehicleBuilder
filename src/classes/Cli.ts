@@ -448,6 +448,7 @@ class Cli {
               this.findVehicleToTow(selectedTruck as Truck);
               console.log('Towing action completed.');
              //Return to avoid instantly calling performActions again
+             return;
             }
           }
           console.log('The selected vehicle is not a truck. Cannot perform tow action.');
@@ -481,41 +482,44 @@ class Cli {
 
   // method to find a vehicle to tow
   // TODO: add a parameter to accept a truck object this is going to need some work check out the wheelie method for a hint
-  async findVehicleToTow(truck: Truck): Promise<void> {
+  findVehicleToTow(truck: Truck): void {
     if (this.vehicles.length === 1) {
     console.log("No other vehicles available to tow.");
     this.performActions();
     return;
     }
     
-    const { vehicleToTow } = await inquirer.prompt([
+    inquirer
+    .prompt([
         {
           type: 'list',
           name: 'vehicleToTow',
           message: 'Select a vehicle to tow',
           choices: this.vehicles
-            .filter((vehicle) => vehicle !== truck)
+            .filter((vehicle) => vehicle !== truck) // Ensure the truck is not included in the list
             .map((vehicle) => ({
               name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
               value: vehicle.vin,
             })),
         },
-      ]);
-
-
-      const vehicleToTowObj = this.vehicles.find(
-          (vehicle) => vehicle.vin === vehicleToTow 
+      ])
+      .then((answers) => {
+        const selectedVin = answers.vehicleToTow;
+        // Find the vehicle to tow by the selected vin
+        const selectedVehicle = this.vehicles.find(
+          (vehicle) => vehicle.vin === selectedVin
         );
 
-        if (!vehicleToTowObj) {
-          console.log('Invalid selection. Try again.');
+        if (selectedVehicle) {
+          //Perform the tow action
+          console.log('Towing ${selectedVehicle.make} ${selectedVehicle.model}...');
+          this.performActions();
         } else {
-          console.log(
-            'Towing vehicle: ${vehicleToTowObj.make} ${vehicleToTowObj.model}.');
-          truck.tow(vehicleToTowObj); //call tow method on teh truck
-        }
-        this.performActions();
-  }  
+          console.log('Invalid selection. Try again.');
+          this.performActions();
+        }     
+  }); 
+}
 }
 
 // export the Cli class
