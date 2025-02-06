@@ -5,7 +5,7 @@ Welcome to the **Vehicle Builder App**! This is a command-line application that 
 ## Walkthrough Video
 
 To help you get started with the app, here is a walkthrough video that demonstrates how to use the Vehicle Builder App:
-
+https://app.screencastify.com/v3/watch/BrS2WupVNITocoMwGT92
 
 
 ## Table of Contents
