@@ -34,8 +34,7 @@ class Cli {
         {
           type: 'list',
           name: 'action',
-          message:
-            'Would you like to create a new vehicle or perform an action on an existing vehicle?',
+          message: 'Would you like to create a new vehicle or perform an action on an existing vehicle?',
           choices: ['Create a new vehicle', 'Select an existing vehicle', 'Exit'],
         },
       ])
@@ -43,13 +42,12 @@ class Cli {
         // check if the user wants to create a new vehicle or select an existing vehicle
         if (answers.action === 'Create a new vehicle') {
           this.createVehicle();
-        } else if (answers.action === 'Choose a vehicle') {
+        } else if (answers.action === 'Select an existing vehicle') {
           this.chooseVehicle();
         } else if (answers.action === 'Exit') {
           console.log('Goodbye!');
           process.exit();
-        }
-      this.performActions();
+        }      
     });
   }
 
@@ -167,7 +165,7 @@ class Cli {
       ])
       .then((answers) => {
         console.log('Car details received: ', answers); //Debugging log
-        //Create a ne Car instance
+        //Create a new Car instance
         const car = new Car(
           // TODO: The generateVin method is static and should be called using the class name Cli, make sure to use Cli.generateVin() for creating a truck and motorbike as well!
           Cli.generateVin(),
@@ -184,11 +182,12 @@ class Cli {
         // set the selectedVehicleVin to the vin of the car
         this.selectedVehicleVin = car.vin;
         // perform actions on the car
-        this.performActions();
+        this.performActions(); 
+        
       });
   }
 
-  // method to create a truck
+   // method to create a truck
   createTruck(): void {
     inquirer
       .prompt([
@@ -469,8 +468,8 @@ class Cli {
           // start the cli to return to the initial prompt if the user wants to select or create another vehicle
           this.startCli();
           return;
-        } else {
           // exit the cli if the user selects exit
+        } else if (answers.action === 'Exit') {          
           this.exit = true;
         }
         if (!this.exit) {
@@ -481,7 +480,7 @@ class Cli {
   }
 
   // method to find a vehicle to tow
-  // TODO: add a parameter to accept a truck object
+  // TODO: add a parameter to accept a truck object this is going to need some work check out the wheelie method for a hint
   async findVehicleToTow(truck: Truck): Promise<void> {
     if (this.vehicles.length === 1) {
     console.log("No other vehicles available to tow.");
